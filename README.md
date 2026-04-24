@@ -1,7 +1,5 @@
 # HR Workflow Designer Module
 
-![Frontend CI](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME/actions/workflows/ci.yml/badge.svg)
-
 A production-quality frontend prototype for visually creating and simulating internal HR workflows — built as a case study submission for **Tredence's Full Stack Engineering Intern** role.
 
 ## Live Links
