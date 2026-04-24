@@ -20,19 +20,10 @@ This submission focuses on **React architecture, graph-based UI design, dynamic 
 
 ## Demo Preview
 
-> Add your screenshots inside: `public/screenshots/`
 
 ### Main Workflow Canvas
 ![Main Workflow Canvas](./public/screenshots/dashboard.png)
 
-### Node Configuration Panel
-![Node Configuration Panel](./public/screenshots/node-config.png)
-
-### Workflow Simulation Panel
-![Workflow Simulation Panel](./public/screenshots/simulation.png)
-
-<!-- Optional: Add a GIF if available -->
-<!-- ![Workflow Demo](./public/screenshots/demo.gif) -->
 
 ---
 
