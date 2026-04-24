@@ -1,12 +1,38 @@
 # HR Workflow Designer Module
 
-A production-quality frontend prototype for visually creating and simulating internal HR workflows — built as a case study for senior frontend engineering roles.
+![Frontend CI](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME/actions/workflows/ci.yml/badge.svg)
+
+A production-quality frontend prototype for visually creating and simulating internal HR workflows — built as a case study submission for **Tredence's Full Stack Engineering Intern** role.
+
+## Live Links
+- **Live Demo:** https://tredence-hr-workflow-designer-modul.vercel.app
+- **GitHub Repository:** https://github.com/Krishgupta102/Tredence-HR_Workflow_Designer_Module
 
 ---
 
 ## Overview
 
 The HR Workflow Designer is a visual, node-based workflow builder for HR administrators. It allows teams to model and test internal processes such as employee onboarding, leave approval, and document verification — all without writing a single line of configuration.
+
+This submission focuses on **React architecture, graph-based UI design, dynamic form handling, workflow validation, and simulation**, closely aligned with the requirements of the Tredence case study. The project is built with a modular, scalable frontend structure using **React Flow**, **TypeScript**, **Zustand**, and **React Hook Form + Zod**.
+
+---
+
+## Demo Preview
+
+> Add your screenshots inside: `public/screenshots/`
+
+### Main Workflow Canvas
+![Main Workflow Canvas](./public/screenshots/dashboard.png)
+
+### Node Configuration Panel
+![Node Configuration Panel](./public/screenshots/node-config.png)
+
+### Workflow Simulation Panel
+![Workflow Simulation Panel](./public/screenshots/simulation.png)
+
+<!-- Optional: Add a GIF if available -->
+<!-- ![Workflow Demo](./public/screenshots/demo.gif) -->
 
 ---
 
@@ -32,6 +58,9 @@ The HR Workflow Designer is a visual, node-based workflow builder for HR adminis
 | MiniMap + Controls (React Flow) | ✅ |
 | Node count in header | ✅ |
 | Collapsible sandbox panel | ✅ |
+| GitHub Actions CI (Lint + Typecheck + Build) | ✅ |
+| Live deployment on Vercel | ✅ |
+| Docker support (optional production build) | ✅ |
 
 ---
 
@@ -40,7 +69,7 @@ The HR Workflow Designer is a visual, node-based workflow builder for HR adminis
 | Library | Purpose |
 |---|---|
 | **Vite** | Build tool |
-| **React 18** | UI framework |
+| **React** | UI framework |
 | **TypeScript** | Type safety |
 | **Tailwind CSS v3** | Styling |
 | **React Flow** | Canvas & graph rendering |
@@ -48,102 +77,23 @@ The HR Workflow Designer is a visual, node-based workflow builder for HR adminis
 | **React Hook Form** | Form state |
 | **Zod** | Schema validation |
 | **Lucide React** | Icons |
+| **GitHub Actions** | CI workflow |
+| **Vercel** | Deployment |
+| **Docker + Nginx** | Optional containerized production build |
 
 ---
 
 ## Running Locally
 
 ```bash
-# 1. Clone / enter the project
-cd tredence-project
+# 1. Clone the repository
+git clone https://github.com/Krishgupta102/Tredence-HR_Workflow_Designer_Module
 
-# 2. Install dependencies (already done if you followed setup)
+# 2. Enter the project
+cd YOUR_REPO_NAME
+
+# 3. Install dependencies
 npm install
 
-# 3. Start the development server
+# 4. Start the development server
 npm run dev
-```
-
-Navigate to **http://localhost:5173** in your browser.
-
----
-
-## Folder Structure
-
-```
-src/
-  components/
-    sidebar/        # NodePalette (draggable node cards)
-    canvas/         # WorkflowCanvas (React Flow wrapper)
-    nodes/          # 5 custom node components
-    forms/
-      forms/        # Per-node-type form components
-      NodeFormPanel # Dynamic form dispatcher
-    sandbox/        # WorkflowSandbox + ExecutionLog
-    layout/         # AppShell (top nav + layout composition)
-  hooks/            # useWorkflowBuilder, useNodeSelection,
-                    # useWorkflowValidation, useSimulation
-  store/            # workflowStore.ts (Zustand)
-  services/         # automationApi.ts, simulationApi.ts
-  mocks/            # automations.ts, simulate.ts
-  utils/            # graphValidation, workflowSerializer, nodeFactory
-  types/            # workflow.ts, nodes.ts, api.ts
-  data/             # sampleWorkflow.ts
-```
-
----
-
-## Architecture Decisions
-
-### 1. Discriminated Union for Node Data
-All node data types share a `type` discriminant field. This allows exhaustive type narrowing in the form dispatcher (`NodeFormPanel`) and validation logic without runtime errors.
-
-```ts
-type NodeData = StartNodeData | TaskNodeData | ApprovalNodeData | AutomatedNodeData | EndNodeData;
-```
-
-### 2. Zustand as Single Source of Truth
-React Flow's `nodes` and `edges` live in Zustand, not local component state. This means any component in the tree can read or mutate the canvas without prop drilling or context overhead.
-
-### 3. Live Form Sync with `watch`
-Each node form uses React Hook Form's `watch()` subscription to propagate changes to the Zustand store in real-time, so the canvas updates immediately as the user types — no submit button required.
-
-### 4. Mock API as a Service Layer
-`automationApi.ts` and `simulationApi.ts` are clean async functions that happen to call mock data. Replacing them with real `fetch()` calls requires zero changes to consumers.
-
-### 5. Validation as Pure Functions
-`graphValidation.ts` is a pure function with no React dependencies. It can be unit tested in isolation and is consumed by both `useWorkflowValidation` (reactive) and `useSimulation` (imperative, pre-run).
-
----
-
-## Validation Rules
-
-1. Exactly one Start Node must exist
-2. At least one End Node must exist
-3. Start Node must not have incoming edges
-4. End Node must not have outgoing edges
-5. All nodes must be reachable from the Start Node
-6. No cycles in the graph (DFS-based detection)
-7. Isolated nodes (no edges) produce a warning
-
----
-
-## Tradeoffs / Assumptions
-
-- **No undo/redo**: React Flow has basic node/edge mutation, and implementing full undo would require maintaining a history stack. Deferred for scope.
-- **No auto-layout**: Dagre/ELK integration was skipped to keep dependencies lean. Nodes are placed where dropped.
-- **No backend**: The app is entirely client-side with an in-memory mock layer. Adding a real API is a thin wrapper change.
-- **Validation on render**: Validation runs on every node/edge change via `useMemo`. For very large graphs this could be debounced, but is performant for typical HR workflow sizes.
-
----
-
-## What Would Be Added With More Time
-
-- [ ] **Undo/Redo** — history stack using Zustand middleware
-- [ ] **Auto-layout** — Dagre integration with a "Layout" button  
-- [ ] **Edge labels** — condition labels (e.g. "Approved", "Rejected") on edges
-- [ ] **Node search/filter** — search across node titles on the canvas
-- [ ] **Workflow versioning** — save multiple named versions
-- [ ] **Role-based access** — different views for HR Admin vs. Manager
-- [ ] **Unit tests** — Vitest + Testing Library for hooks and validation utils
-- [ ] **Real backend** — Express/FastAPI backend replacing mock layer
