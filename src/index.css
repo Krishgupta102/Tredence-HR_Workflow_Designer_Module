@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #f8fafc;
+    color: #0f172a;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .node-base {
+    @apply bg-white rounded-xl border border-slate-200 shadow-node min-w-[180px] cursor-pointer transition-all duration-150;
+  }
+  .node-selected {
+    @apply border-brand-500 shadow-node-selected;
+  }
+  .node-header {
+    @apply flex items-center gap-2 px-3 py-2 rounded-t-xl text-sm font-semibold;
+  }
+  .node-body {
+    @apply px-3 pb-3 pt-1 text-xs text-slate-500;
+  }
+  .form-label {
+    @apply block text-xs font-medium text-slate-600 mb-1;
+  }
+  .form-input {
+    @apply w-full px-3 py-2 text-sm bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent transition-all placeholder-slate-400;
+  }
+  .form-select {
+    @apply w-full px-3 py-2 text-sm bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent transition-all appearance-none cursor-pointer;
+  }
+  .form-error {
+    @apply text-xs text-red-500 mt-1;
+  }
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium rounded-lg transition-colors shadow-sm;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 text-sm font-medium rounded-lg transition-colors border border-slate-200 shadow-sm;
+  }
+  .btn-danger {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 text-sm font-medium rounded-lg transition-colors border border-red-200;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-3 py-1.5 text-slate-500 hover:text-slate-700 hover:bg-slate-100 text-sm font-medium rounded-lg transition-colors;
+  }
+  .badge {
+    @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium;
+  }
+  .panel-section {
+    @apply border-b border-slate-100 last:border-0;
+  }
+}
+
+/* React Flow overrides */
+.react-flow__node {
+  cursor: default;
+}
+.react-flow__handle {
+  width: 10px !important;
+  height: 10px !important;
+  background: #94a3b8 !important;
+  border: 2px solid white !important;
+  transition: background 0.15s;
+}
+.react-flow__handle:hover {
+  background: #3b82f6 !important;
+}
+.react-flow__edge-path {
+  stroke: #94a3b8;
+  stroke-width: 2;
+}
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: #3b82f6;
+}
+.react-flow__controls {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+.react-flow__controls-button {
+  background: white;
+  border-bottom: 1px solid #e2e8f0;
+}
+.react-flow__controls-button:hover {
+  background: #f1f5f9;
+}
+.react-flow__minimap {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* Drag ghost */
+.dragging-node-ghost {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Log animation */
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.log-entry {
+  animation: slideInUp 0.2s ease-out forwards;
+}
